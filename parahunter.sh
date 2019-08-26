@@ -18,7 +18,7 @@ where:
 
 COV=0.7
 ID=0.7
-while getopts ':han:' option; do
+while getopts ':h:a:n:' option; do
   case "$option" in
     h) echo "$usage"
        exit
