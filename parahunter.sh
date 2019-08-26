@@ -46,6 +46,7 @@ while getopts ':han:' option; do
        ;;
   esac
 done
+shift $((OPTIND - 2))
 
 
 if [ "$#" == 0 ]; then
@@ -74,8 +75,6 @@ echo $1
 echo $2
 parahunter-dnds.py -clu $1-clu.tsv -aa $1 -nuc $2 -ctl ${CTL}
 
-
-shift $((OPTIND - 1))
 
 
 
