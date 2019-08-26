@@ -46,8 +46,6 @@ while getopts ':han:' option; do
        ;;
   esac
 done
-shift $((OPTIND - 1))
-
 
 
 if [ "$#" == 0 ]; then
@@ -73,10 +71,11 @@ mv clu.tsv $1-clu.tsv
 mkdir $1-clusters
 clu2fasta.py -clu $1-clu.tsv -outdir $1-clusters -prots $1
 echo $1
+echo $2
 parahunter-dnds.py -clu $1-clu.tsv -aa $1 -nuc $2 -ctl ${CTL}
 
 
-
+shift $((OPTIND - 1))
 
 
 
