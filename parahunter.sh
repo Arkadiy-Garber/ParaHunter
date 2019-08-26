@@ -18,7 +18,7 @@ where:
 
 COV=0.7
 ID=0.7
-while getopts ':han:' option; do
+while getopts ':hanc:' option; do
   case "$option" in
     h) echo "$usage"
        exit
@@ -46,7 +46,7 @@ while getopts ':han:' option; do
        ;;
   esac
 done
-shift $((OPTIND - 1))
+shift $((OPTIND - 2))
 
 
 if [ "$#" == 0 ]; then
