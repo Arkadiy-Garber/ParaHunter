@@ -72,7 +72,7 @@ mv clu.tsv $1-clu.tsv
 mkdir $1-clusters
 clu2fasta.py -clu $1-clu.tsv -outdir $1-clusters -prots $1
 echo $1
-echo NUC
+echo -n
 parahunter-dnds.py -clu $1-clu.tsv -aa $1 -nuc $2 -ctl ${CTL}
 
 
