@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # setting colors to use
 GREEN='\033[0;32m'
@@ -18,7 +18,7 @@ where:
 
 COV=0.7
 ID=0.7
-while getopts ':hsfc:' option; do
+while getopts ':han:' option; do
   case "$option" in
     h) echo "$usage"
        exit
