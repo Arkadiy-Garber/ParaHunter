@@ -18,7 +18,7 @@ where:
 
 COV=0.7
 ID=0.7
-while getopts ':hna:' option; do
+while getopts ':han:' option; do
   case "$option" in
     h) echo "$usage"
        exit
@@ -72,7 +72,7 @@ mv clu.tsv $1-clu.tsv
 mkdir $1-clusters
 clu2fasta.py -clu $1-clu.tsv -outdir $1-clusters -prots $1
 echo $1
-echo -n
+echo $((OPTIND - 1))
 parahunter-dnds.py -clu $1-clu.tsv -aa $1 -nuc $2 -ctl ${CTL}
 
 
