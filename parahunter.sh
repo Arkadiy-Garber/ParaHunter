@@ -46,7 +46,7 @@ while getopts ':han:' option; do
        ;;
   esac
 done
-shift $((OPTIND - 2))
+shift $((OPTIND - 1))
 
 
 if [ "$#" == 0 ]; then
