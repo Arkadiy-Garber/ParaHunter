@@ -71,7 +71,7 @@ rm clu_seq
 mv clu.tsv $1-clu.tsv
 
 mkdir $1-clusters
-clu2fasta.py -clu $1-clu.tsv -outdir $1-Clusters -prots $1
+clu2fasta.py -clu $1-clu.tsv -outdir $1-clusters -prots $1
 parahunter-dnds.py -clu $1-clu.tsv -aa $1 -nuc $2 -ctl ${CTL}
 
 

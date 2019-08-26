@@ -374,7 +374,7 @@ def delim(line):
 
 
 parser = argparse.ArgumentParser(
-    prog="paraHunter.py",
+    prog="parahunter-dnds.py",
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description=textwrap.dedent('''
     ************************************************************************
