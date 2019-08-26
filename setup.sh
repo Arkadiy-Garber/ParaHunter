@@ -22,7 +22,7 @@ source activate parahunt
 ## creating directory for conda-env-specific source files
 mkdir -p ${CONDA_PREFIX}/etc/conda/activate.d
 
-## adding FeGenie bin path and GToTree_HMM_dir variable:
+## adding variables:
 echo '#!/bin/sh'" \
 export PATH=\"$(pwd):"'$PATH'\"" \
 export CTL=\"$(pwd)/codeml-2.ctl\"" >> ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
