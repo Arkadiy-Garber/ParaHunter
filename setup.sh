@@ -14,7 +14,7 @@ conda config --add channels conda-forge 2> /dev/null
 conda config --add channels au-eoed 2> /dev/null
 
 ## creating GToTree environment and installing dependencies
-conda create -n parahunt pal2nal paml --yes
+conda create -n parahunt mmseqs2 pal2nal.pl muscle paml --yes
 
 ## activating environment
 source activate parahunt
@@ -22,10 +22,10 @@ source activate parahunt
 ## creating directory for conda-env-specific source files
 mkdir -p ${CONDA_PREFIX}/etc/conda/activate.d
 
-## adding variables:
+## adding codeml-2.ctl file path:
 echo '#!/bin/sh'" \
-export PATH=\"$(pwd):"'$PATH'\"" \
-export CTL=\"$(pwd)/codeml-2.ctl\"" >> ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
+
+export ctl=\"$(pwd)/codeml-2.ctl\"" >> ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
 
 # re-activating environment so variable and PATH changes take effect
 source activate parahunt

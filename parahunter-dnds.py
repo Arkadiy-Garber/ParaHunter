@@ -436,7 +436,7 @@ count = 0
 codealign = os.listdir(DIR)
 for file in codealign:
     if re.findall(r'codonalign', file):
-        clu = file.split(".")[0]
+        clu = file.split(".faa")[0]
         setup = open(args.ctl)
         out = open("%s/%s.ctl" % (DIR, str(clu)), "w")
 
@@ -497,17 +497,13 @@ for i in dsDict.keys():
 out = open("dS_summary.csv", "w")
 out.write("cluster" + "," + "gene" + "," + "closestNeighbor" + "," + "lowestDS" + "," + "dN/dS" + "\n")
 for i in MLCdict.keys():
-    print(i)
     for j in MLCdict[i]:
         out.write(i + "," + j + "," + MLCdict[i][j]["closestNeighbor"] + "," + MLCdict[i][j]["lowestDS"] + "," + dndsDict[j][MLCdict[i][j]["closestNeighbor"]] + "\n")
-        print(j)
-        print(MLCdict[i][j])
-    print("")
     out.write("####################################################################\n")
 
 out.close()
 
-
+os.system("rm 2NG.t 2NG.dN 2NG.dS rst1 rst 2ML.t 2ML.dN 2ML.dS 4fold.nuc rub")
 
 
 
