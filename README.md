@@ -11,6 +11,6 @@
 
     ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna
 
-### setting minimum amino acid identity for clustering to 50%, with query coverage of at least 50%
+### setting minimum amino acid identity for clustering to 35%, with query coverage of at least 50%
 
-    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna -m 0.5 -c 0.5
+    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna -m 0.35 -c 0.5
