@@ -1,13 +1,13 @@
 # ParaHunter
 
-## easy-installation:
+### easy-installation:
   
     git clone https://github.com/Arkadiy-Garber/ParaHunter.git
     cd ParaHunter
     ./setup.sh
     source activate parahunt
 
-## quick-start
+### quick-start
 
     ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna
 
