@@ -5,7 +5,7 @@
     git clone https://github.com/Arkadiy-Garber/ParaHunter.git
     cd ParaHunter
     ./setup.sh
-    conda activate parahunt
+    source activate parahunt
 
 ## quick-start
 
