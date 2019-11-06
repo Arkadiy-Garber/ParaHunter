@@ -6,14 +6,15 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 
-usage="$(basename "$0") [-h] [-a s] [-n s] [-m n] [-c n] -- program to cluster protein sequences based on amino acid identity
+usage="$(basename "$0") [-h] [-a s] [-n s] [-m n] [-c n] [-l s] -- program to cluster protein sequences based on amino acid identity
 
 options:
     -h     show this help text
     -a     input FASTA file containing ORFs in amino acid format
     -n     input FASTA file containing ORFs in nucleic acid format
     -c     fraction of query sequence that must align to cluster (default 0.7)
-    -m     cluster sequences above this identity threshold (default: 0.7)"
+    -m     cluster sequences above this identity threshold (default: 0.7)
+    -l     codeml control file"
 
 if [ "$#" == 0 ] || [ $1 == "-h" ] || [ $1 == "help" ]; then
 echo "$usage"
@@ -22,7 +23,7 @@ echo "$usage"
 
 COV=0.7
 ID=0.7
-while getopts ':a:n:m:c:' args; do
+while getopts ':a:n:m:c:l:' args; do
   case "$args" in
 
     a) AA=${OPTARG}
@@ -35,6 +36,9 @@ while getopts ':a:n:m:c:' args; do
        ;;
 
     m) ID=${OPTARG}
+       ;;
+
+    l) CTL=${OPTARG}
        ;;
 
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
@@ -55,7 +59,7 @@ done
 #echo ${ID}
 #echo ${CTL}
 
-echo "${GREEN}Clustering ORFs"
+echo "Clustering ORFs"
 mmseqs createdb ${AA} ${AA}.db &> mmseqs.log1
 mmseqs cluster ${AA}.db clu tmp --min-seq-id ${ID} -c ${COV} &> mmseqs.log2
 mmseqs createseqfiledb ${AA}.db clu clu_seq &> mmseqs.log3
@@ -74,12 +78,11 @@ rm *.index
 rm ${AA}.db
 rm ${AA}.db_h
 rm ${AA}.db.lookup
-rm clu_seq
-rm clu_seq.fasta
+#rm clu*
 mv clu.tsv ${AA}-clu.tsv
 
 mkdir ${AA}-clusters
-echo "${GREEN}Splitting ORFs into separate files"
+echo "${GREEN}Splitting ORFs into separate files"cd g
 clu2fasta.py -clu ${AA}-clu.tsv -outdir ${AA}-clusters -prots ${AA}
 echo "${GREEN}Performing dN/dS analysis with Codeml"
 parahunter-dnds.py -clu ${AA}-clu.tsv -aa ${AA} -nuc ${NUC} -ctl ${ctl}

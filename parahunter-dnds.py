@@ -29,7 +29,7 @@ def Dictparser(Dictionary):
         if float(Dictionary[i]) < float(lowest):
             lowest = Dictionary[i]
             key = i
-    return [i, lowest]
+    return [key, lowest]
 
 
 def reverseComplement(seq):
