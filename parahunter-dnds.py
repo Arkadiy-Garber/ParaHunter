@@ -407,10 +407,12 @@ cwd = os.getcwd()
 
 os.system('mkdir ' + cwd + "/dnds-analysis")
 
+DIR = cwd + "/dnds-analysis"
+
 count = 0
 for i in cluDict.keys():
     if len(cluDict[i]) > 1:
-        name = (i.split("|")[0] + "_" + lastItem(i.split("_")))
+        name = allButTheLast(i, "_") + "_" + lastItem(i.split("_"))
         outpep = open(cwd + "/dnds-analysis/%s.faa" % name, "w")
         outnuc = open(cwd + "/dnds-analysis/%s.faa.fna" % name, "w")
         for j in cluDict[i]:
@@ -424,7 +426,6 @@ for i in cluDict.keys():
 
 
 # ALIGNING PROTEIN SEQUENCES AND CREATING A CODON ALIGNMENT
-DIR = cwd + "/dnds-analysis"
 os.system("for i in %s/*faa; do"
           " muscle -in $i -out $i.aligned.fa;"
           " pal2nal.pl $i.aligned.fa $i.fna -output fasta > $i.codonalign.fa;"
@@ -469,17 +470,21 @@ for i in codealign:
     clu = i
     if re.findall(r'mlcTree', i):
         file = open("%s/%s" % (DIR, i), "r")
+        print(i)
         for j in file:
+            print(j)
             if re.findall(r'(\) \.\.\.)', j):
                 ls = (j.rstrip().split("..."))
                 orf1 = (ls[0].split("(")[1][0:len(ls[0].split("(")[1])-2])
                 orf2 = (ls[1].split("(")[1][0:len(ls[1].split("(")[1])-1])
             if re.findall(r'  dS', j):
-                secondHalf = (j.split("dN/dS=")[1])
-                ls2 = (secondHalf.split(" "))
-                dnds = (firstNonspace(ls2))
-                dndsDict[orf1][orf2] = dnds
-                dndsDict[orf2][orf1] = dnds
+                try:
+                    secondHalf = (j.split("dN = ")[1])
+                except IndexError:
+                    secondHalf = (j.split("dN =")[1])
+                dn = secondHalf.split(" ")[0]
+                dndsDict[orf1][orf2] = dn
+                dndsDict[orf2][orf1] = dn
 
                 dS = (j.rstrip().split(" dS")[1])
                 dS = remove(dS, [" ", "="])
@@ -495,7 +500,7 @@ for i in dsDict.keys():
         MLCdict[i][j]["lowestDS"] = lowestDS
 
 out = open("dS_summary.csv", "w")
-out.write("cluster" + "," + "gene" + "," + "closestNeighbor" + "," + "lowestDS" + "," + "dN/dS" + "\n")
+out.write("cluster" + "," + "gene" + "," + "closestNeighbor" + "," + "lowestDS" + "," + "dN" + "\n")
 for i in MLCdict.keys():
     for j in MLCdict[i]:
         out.write(i + "," + j + "," + MLCdict[i][j]["closestNeighbor"] + "," + MLCdict[i][j]["lowestDS"] + "," + dndsDict[j][MLCdict[i][j]["closestNeighbor"]] + "\n")

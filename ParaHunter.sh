@@ -85,7 +85,7 @@ mkdir ${AA}-clusters
 echo "${GREEN}Splitting ORFs into separate files"cd g
 clu2fasta.py -clu ${AA}-clu.tsv -outdir ${AA}-clusters -prots ${AA}
 echo "${GREEN}Performing dN/dS analysis with Codeml"
-parahunter-dnds.py -clu ${AA}-clu.tsv -aa ${AA} -nuc ${NUC} -ctl ${ctl}
+parahunter-dnds.py -clu ${AA}-clu.tsv -aa ${AA} -nuc ${NUC} -ctl ${CTL}
 
 
 
