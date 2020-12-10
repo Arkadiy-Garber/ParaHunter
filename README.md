@@ -3,6 +3,7 @@ If you found this software useful to your research please cite as follows:
 
 Garber, AI and Miller, SR (2020) ParaHunter: identification of gene paralogs in genomes. 2020: ParaHunter, GitHub repository: https://github.com/Arkadiy-Garber/ParaHunter.
 
+ParaHunter uses [MMseqs2] (https://www.nature.com/articles/nbt.3988) to cluster sequences from a single genomic dataset, based on a set of user-defined parameters. The clustered genes are then aligned using Muscle and PAL2NAL, and pairwise dS, dN, and dN/dS values are calculated using PAML.
 
 ## easy-installation:
   
