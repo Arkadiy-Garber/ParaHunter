@@ -23,7 +23,7 @@ ParaHunter uses [MMseqs2](https://www.nature.com/articles/nbt.3988) to cluster s
 
 ## Tutorial (Binder)
 
-This software uses PAML, in addition to other tools like MMseqs2 and Muscle. If you would like to learn more about what is going on under the hood of this program, and some of the theoritcial framework behind the evolutionary biology of gene divergence estimates, please see the following slideshow and associated video:
+This software uses PAML, in addition to other tools like MMseqs2 and Muscle. If you would like to learn more about what is going on under the hood of this program, and some of the theoretical framework behind the evolutionary biology of gene divergence estimates, please see the following slideshow and associated video:
 
 [Slideshow](https://github.com/biovcnet/topic-pop-gen-and-comparative-genomics/blob/master/Lesson-1/Comparative-Genomics-Lesson-1.pdf) | [Video presentation](https://www.youtube.com/watch?v=NtFuHFp0xB4)
 
