@@ -30,6 +30,7 @@ This software uses PAML, in addition to other tools like MMseqs2 and Muscle. If 
 ## Walkthrough
 
 If you'd like to try out this program in a virtual terminal session with all dependencies and test dataset pre-loaded, hit the 'launch binder' button below, and follow the commands in 'Walkthrough'
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://gesis.mybinder.org/binder/v2/gh/biovcnet/bvcn-binder-paml/master?urlpath=lab)
 
 (Initially forked from [here](https://github.com/binder-examples/conda). Thank you to the awesome [binder](https://mybinder.org/) team!)
@@ -38,7 +39,7 @@ You can also follow along in this linked video:
 [Video presentation](https://www.youtube.com/watch?v=stjJHfQ51sA&t=1179s)
 
 
-These videos were made as part of the [Bioinformatics Virtual Coordination Network](https://biovcnet.github.io/) :)
+### These videos were made as part of the [Bioinformatics Virtual Coordination Network](https://biovcnet.github.io/) :)
 
 ### Walkthrough (interspecies example with two homologous sequences)
 
