@@ -1,7 +1,7 @@
 # ParaHunter
 If you found this software useful to your research please cite as follows:
 
-Garber, AI and Miller, SR (2020) ParaHunter: identification of gene paralogs in genomes. 2020: ParaHunter, GitHub repository: https://github.com/Arkadiy-Garber/ParaHunter. Publication coming soon. doi: []()
+Garber, AI and Miller, SR (2020) ParaHunter: identification of gene paralogs in genomes. 2020: ParaHunter, GitHub repository: https://github.com/Arkadiy-Garber/ParaHunter.
 
 
 ## easy-installation:
