@@ -8,7 +8,7 @@ Garber, AI and Miller, SR (2020) ParaHunter: identification of gene paralogs in 
   
     git clone https://github.com/Arkadiy-Garber/ParaHunter.git
     cd ParaHunter
-    ./setup.sh
+    bash setup.sh
     source activate parahunt
 
 ## quick-start
