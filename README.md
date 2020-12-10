@@ -39,9 +39,9 @@ You can also follow along in this linked video:
 [Video presentation](https://www.youtube.com/watch?v=stjJHfQ51sA&t=1179s)
 
 
-### These videos were made as part of the [Bioinformatics Virtual Coordination Network](https://biovcnet.github.io/) :)
+These videos were made as part of the [Bioinformatics Virtual Coordination Network](https://biovcnet.github.io/) :)
 
-### Walkthrough (interspecies example with two homologous sequences)
+### Walkthrough (Using PAML)
 
 Enter the first direcotry
 
