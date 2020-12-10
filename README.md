@@ -41,7 +41,7 @@ You can also follow along in this linked video:
 
 These videos were made as part of the [Bioinformatics Virtual Coordination Network](https://biovcnet.github.io/) :)
 
-### Walkthrough (Using PAML)
+### Using PAML
 
 Enter the first direcotry
 
@@ -63,8 +63,6 @@ Run codeml
 
     codeml codeml.ctl
 
-### Walkthrough (intraspecies example with three gene paralogs from one genome)
-
 Enter the second directory
 
     cd intraspecies_example/
@@ -82,7 +80,7 @@ Run codeml after checking out the input/output codeml.ctl file
     codeml codeml.ctl
 
 
-### Walkthrough (ParaHunter)
+### ParaHunter tutorial
 
 Print the ParaHunter help menu
 
