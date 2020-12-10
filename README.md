@@ -2,6 +2,22 @@
 If you found this software useful to your research please cite as follows: Garber AI, Miller, SR (2020) ParaHunter: identification of gene paralogs in genomes. Publication coming soon. doi: []()
 
 
+## easy-installation:
+  
+    git clone https://github.com/Arkadiy-Garber/ParaHunter.git
+    cd ParaHunter
+    ./setup.sh
+    source activate parahunt
+
+## quick-start
+
+    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna
+
+### setting minimum amino acid identity for clustering to 35%, with query coverage of at least 50%
+
+    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna -m 0.35 -c 0.5
+
+
 ## Tutorial (Binder)
 
 This software uses PAML, in addition to other tools like MMseqs2 and Muscle. If you would like to learn more about what is going on under the hood of this program, and some of the theoritcial framework behind the evolutionary biology of gene divergence estimates, please see the following slideshow and associated video:
@@ -75,18 +91,3 @@ Run program on the test dataset
     cd cyanothece/
     ParaHunter.sh -a CyanothecePCC7425.faa -n CyanothecePCC7425.ffn -l ../codeml-2.ctl
 
-
-## easy-installation:
-  
-    git clone https://github.com/Arkadiy-Garber/ParaHunter.git
-    cd ParaHunter
-    ./setup.sh
-    source activate parahunt
-
-## quick-start
-
-    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna
-
-### setting minimum amino acid identity for clustering to 35%, with query coverage of at least 50%
-
-    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna -m 0.35 -c 0.5
