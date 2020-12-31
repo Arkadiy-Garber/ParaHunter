@@ -14,11 +14,11 @@ ParaHunter uses [MMseqs2](https://www.nature.com/articles/nbt.3988) to cluster s
 
 ## quick-start
 
-    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna
+    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.ffn
 
 ### setting minimum amino acid identity for clustering to 35%, with query coverage of at least 50%
 
-    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.fna -m 0.35 -c 0.5
+    ParaHunter.sh -a genomeOrfs_aa.faa -n genomeOrfs_nuc.ffn -m 0.35 -c 0.5
 
 
 ## Tutorial (Binder)
