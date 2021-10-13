@@ -312,12 +312,12 @@ def fasta2(fasta_file):
                 Dict[header] = seq
                 header = i[1:]
                 header = header.split(" ")[0]
-                # header = header.split("|")[1]
+                header = header.split("|")[1]
                 seq = ''
             else:
                 header = i[1:]
                 header = header.split(" ")[0]
-                # header = header.split("|")[1]
+                header = header.split("|")[1]
                 seq = ''
         else:
             seq += i
@@ -377,143 +377,38 @@ parser = argparse.ArgumentParser(
     ************************************************************************
     '''))
 
-parser.add_argument('-clu', type=str, help="clu.tsv output from mmseqs", default="NA")
 parser.add_argument('-nuc', type=str, help="genes in nucleotide format", default="NA")
 parser.add_argument('-aa', type=str, help="genes in amino acid format", default="NA")
-parser.add_argument('-ctl', type=str, help="template control file for codeml", default="NA")
 
 args = parser.parse_args()
-#
-# os.system("echo ${ctl} > ctl.txt")
-# file = open("ctl.txt")
-# for i in file:
-#     ctlLocation = i.rstrip()
 
 nuc = open(args.nuc)
-nuc = fasta2(nuc)
+nuc = fasta(nuc)
 
 pep = open(args.aa)
-pep = fasta2(pep)
+pep = fasta(pep)
 
+counter = 0
+for i in nuc.keys():
+    if re.findall(r'\[locus_tag', i):
+        counter += 1
 
-cluDict = defaultdict(list)
-clu = open(args.clu)
-for i in clu:
-    ls = (i.rstrip().split("\t"))
-    cluDict[ls[0]].append(ls[1])
-
-cwd = os.getcwd()
-
-os.system('mkdir ' + cwd + "/dnds-analysis")
-
-DIR = cwd + "/dnds-analysis"
-
-count = 0
-for i in cluDict.keys():
-    if len(cluDict[i]) > 1:
-        name = allButTheLast(i, "_") + "_" + lastItem(i.split("_"))
-        outpep = open(cwd + "/dnds-analysis/%s.faa" % name, "w")
-        outnuc = open(cwd + "/dnds-analysis/%s.faa.fna" % name, "w")
-        for j in cluDict[i]:
-            outpep.write(">" + j + "\n")
-            outnuc.write(">" + j + "\n")
-            outpep.write(pep[j] + "\n")
-            outnuc.write(nuc[j] + "\n")
-        outpep.close()
-        outnuc.close()
-        count += 1
-
-
-# ALIGNING PROTEIN SEQUENCES AND CREATING A CODON ALIGNMENT
-os.system("for i in %s/*faa; do"
-          " muscle -in $i -out $i.aligned.fa;"
-          " pal2nal.pl $i.aligned.fa $i.fna -output fasta > $i.codonalign.fa;"
-          " done" % DIR)
-
-
-# BUILDING CONTROL FILES
-count = 0
-codealign = os.listdir(DIR)
-for file in codealign:
-    if re.findall(r'codonalign', file):
-        clu = file.split(".faa")[0]
-        setup = open(args.ctl)
-        out = open("%s/%s.ctl" % (DIR, str(clu)), "w")
-
-        for i in setup:
-            if re.findall('seqfile', i):
-                out.write('' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + 'seqfile' + ' ' + '=' + ' dnds-analysis/' + file + ' ' + '*' + ' ' + 'sequence' + ' ' + 'data' + ' ' + 'filename\n')
-
-            elif re.findall(r'outfile', i):
-                out.write('' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + 'outfile' + ' ' + '=' + ' '
-                          + 'dnds-analysis/mlcTree_' + str(clu) + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' ' + '' + ' '
-                          + '' + ' ' + '' + ' ' + '' + ' ' + '*' + ' ' + 'main' + ' ' + 'result' + ' ' + 'file' + ' ' + 'name\n')
-
-            else:
-                out.write(i)
-        out.close()
-
-
-# RUNNING CODEML FOR DN/DS CALCULATION
-codealign = os.listdir(DIR)
-for file in codealign:
-    if lastItem(file.split(".")) == "ctl":
-        os.system("codeml dnds-analysis/%s" % (file))
-
-
-# PARSING CODEML OUTPUT
-dsDict = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: 'EMPTY')))
-dndsDict = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: 'EMPTY')))
-codealign = os.listdir(DIR)
-for i in codealign:
-    clu = i
-    if re.findall(r'mlcTree', i):
-        file = open("%s/%s" % (DIR, i), "r")
-        print(i)
-        for j in file:
-            print(j)
-            if re.findall(r'(\) \.\.\.)', j):
-                ls = (j.rstrip().split("..."))
-                orf1 = (ls[0].split("(")[1][0:len(ls[0].split("(")[1])-2])
-                orf2 = (ls[1].split("(")[1][0:len(ls[1].split("(")[1])-1])
-            if re.findall(r'  dS', j):
-                try:
-                    secondHalf = (j.split("dN = ")[1])
-                except IndexError:
-                    secondHalf = (j.split("dN =")[1])
-                dn = secondHalf.split(" ")[0]
-                dndsDict[orf1][orf2] = dn
-                dndsDict[orf2][orf1] = dn
-
-                dS = (j.rstrip().split(" dS")[1])
-                dS = remove(dS, [" ", "="])
-                dsDict[clu][orf1][orf2] = dS
-                dsDict[clu][orf2][orf1] = dS
-
-MLCdict = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: 'EMPTY')))
-for i in dsDict.keys():
-    for j in dsDict[i]:
-        closestNeighbor = Dictparser(dsDict[i][j])[0]
-        lowestDS = Dictparser(dsDict[i][j])[1]
-        MLCdict[i][j]["closestNeighbor"] = closestNeighbor
-        MLCdict[i][j]["lowestDS"] = lowestDS
-
-out = open("dS_summary.csv", "w")
-out.write("cluster" + "," + "gene" + "," + "closestNeighbor" + "," + "lowestDS" + "," + "dN" + "\n")
-for i in MLCdict.keys():
-    for j in MLCdict[i]:
-        out.write(i + "," + j + "," + MLCdict[i][j]["closestNeighbor"] + "," + MLCdict[i][j]["lowestDS"] + "," + dndsDict[j][MLCdict[i][j]["closestNeighbor"]] + "\n")
-    out.write("####################################################################\n")
-
+out = open(args.aa + ".ph", "w")
+for i in pep.keys():
+    if counter > 0:
+        header = i.split("locus_tag=")[1].split("]")[0]
+    else:
+        header = i
+    out.write(">" + header + "\n")
+    out.write(pep[i] + "\n")
 out.close()
 
-os.system("rm 2NG.t 2NG.dN 2NG.dS rst1 rst 2ML.t 2ML.dN 2ML.dS 4fold.nuc rub")
-
-
-
-
-
-
-
-
-
+out = open(args.nuc + ".ph", "w")
+for i in nuc.keys():
+    if counter > 0:
+        header = i.split("locus_tag=")[1].split("]")[0]
+    else:
+        header = i
+    out.write(">" + header + "\n")
+    out.write(nuc[i] + "\n")
+out.close()

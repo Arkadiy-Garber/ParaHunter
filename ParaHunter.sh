@@ -13,8 +13,7 @@ options:
     -a     input FASTA file containing ORFs in amino acid format
     -n     input FASTA file containing ORFs in nucleic acid format
     -c     fraction of query sequence that must align to cluster (default 0.7)
-    -m     cluster sequences above this identity threshold (default: 0.7)
-    -l     codeml control file"
+    -m     cluster sequences above this identity threshold (default: 0.7)"
 
 if [ "$#" == 0 ] || [ $1 == "-h" ] || [ $1 == "help" ]; then
 echo "$usage"
@@ -38,7 +37,7 @@ while getopts ':a:n:m:c:l:' args; do
     m) ID=${OPTARG}
        ;;
 
-    l) CTL=${OPTARG}
+    l) ctl=${OPTARG}
        ;;
 
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
@@ -59,8 +58,11 @@ done
 #echo ${ID}
 #echo ${CTL}
 
+fixfastas.py -aa ${AA} -nuc ${NUC}
+sleep 5
+
 echo "Clustering ORFs"
-mmseqs createdb ${AA} ${AA}.db &> mmseqs.log1
+mmseqs createdb ${AA}.ph ${AA}.db &> mmseqs.log1
 mmseqs cluster ${AA}.db clu tmp --min-seq-id ${ID} -c ${COV} &> mmseqs.log2
 mmseqs createseqfiledb ${AA}.db clu clu_seq &> mmseqs.log3
 mmseqs result2flat ${AA}.db ${AA}.db clu_seq clu_seq.fasta &> mmseqs.log4
@@ -78,14 +80,17 @@ rm *.index
 rm ${AA}.db
 rm ${AA}.db_h
 rm ${AA}.db.lookup
-#rm clu*
+rm clu_seq.*
+#rm clu.*
+rm ${AA}.db_h.dbtype
+rm ${AA}.db.source
 mv clu.tsv ${AA}-clu.tsv
 
 mkdir ${AA}-clusters
 echo "${GREEN}Splitting ORFs into separate files"cd g
-clu2fasta.py -clu ${AA}-clu.tsv -outdir ${AA}-clusters -prots ${AA}
+clu2fasta.py -clu ${AA}-clu.tsv -outdir ${AA}-clusters -prots ${AA}.ph
 echo "${GREEN}Performing dN/dS analysis with Codeml"
-parahunter-dnds.py -clu ${AA}-clu.tsv -aa ${AA} -nuc ${NUC} -ctl ${CTL}
+parahunter-dnds.py -clu ${AA}-clu.tsv -aa ${AA}.ph -nuc ${NUC}.ph -ctl ${ctl}
 
 
 
