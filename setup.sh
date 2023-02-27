@@ -25,6 +25,8 @@ mkdir -p ${CONDA_PREFIX}/etc/conda/activate.d
 ## adding codeml-2.ctl file path:
 echo '#!/bin/sh'" \
 
+export PATH=\"$(pwd):"'$PATH'\"" \
+
 export ctl=\"$(pwd)/codeml-2.ctl\"" >> ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
 
 # re-activating environment so variable and PATH changes take effect
